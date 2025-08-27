@@ -1,16 +1,32 @@
 <html>
 
 <head>
-  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta name="referrer" content="never">
-  <title>bilibili-parse播放测试</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=11" />
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport" name="viewport">
+  <title>视频在线播放器</title>
   <link rel="shortcut icon" href="favicon.png">
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #player1 {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
 
-<body>
-  <div id="dplayer1"></div>
-
-  <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
+<body marginwidth="0" marginheight="0" style="position:absolute;width:100%;height:100%;top:0;bottom:0;background:#000">
+  <div id="player1"></div>
+  <script type="text/javascript" src="https://api.nxvav.cn/api/m3u8/assets/js/DPlayer.min.js" charset="utf-8"></script>
   <script>
     const params = window.location.search.substring(1).split('&')
     const map = {
@@ -24,7 +40,7 @@
       if (res.ok) {
         res.json().then(data => {
           new DPlayer({
-            container: document.getElementById('dplayer1'),
+            container: document.getElementById('player1'),
             video: {
               url: data.url.replace(/^https?\:\/\//i, 'https://'),
               type: 'auto'
@@ -33,6 +49,10 @@
         })
       }
     })
+
+    window.addEventListener('resize', function () {
+      dp.resize();
+    });
   </script>
 </body>
 

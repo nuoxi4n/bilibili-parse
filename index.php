@@ -9,10 +9,12 @@ $cid = isset($_GET['cid']) ? intval($_GET['cid']) : 0;
 $ep = isset($_GET['ep']) ? intval($_GET['ep']) : 0;
 
 if (!$av && !$bv && !$ep) {
-    $file_path = __DIR__ . '/public/readme.html';
-    if (file_exists($file_path)) {
-        echo file_get_contents($file_path);
-    }
+    header('Content-Type: application/json');
+    http_response_code(400);
+    echo json_encode([
+        "code" => 400,
+        "msg" => '参数无效'
+    ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     exit;
 }
 
